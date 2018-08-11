@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+    .main{
+        max-height:740px;;
+    }
+    .main *{
+        max-height: inherit;
+    }
+     .leftcont{
+         margin: 0px;
+         padding:0px;
+         margin-left: 1em;
+     }
+     .rightcont{
+        background: #E2F0EB;
+        margin: 0px;
+        overflow: auto;
+     }
+    #headingZero{
+        background: black;
+    }
+    .currentscore{
+        margin-bottom:1em;
+        background: 
+    }
+    h6{
+        text-align: center
+    }
+    .card-header{
+     text-align: center;
+     background:#F4D7AE;
+
+    }
+    .ninjagold{
+        color:gold  ;
+    }
+    .guess{
+        margin-top:1em;
+    }
+    .card-body{
+        background:rgb(226, 235, 234)
+    }
+    </style>
+</head>
+<body>
+<!--main cont  -->
+    <div class ="main  row">
+<!-- left -->
+<div class = "container clearfix leftcont col-sm-12 col-md-4 col-lg-3">
+    <div class="accordion" id="accordionExample">
+<!-- SCORE -->
+<div class="card">
+    <div class="card-header" id="headingZero" data-toggle="collapse" data-target="#collapseZero">
+        <h4 class = ninjagold> NinjaGold <i class="large material-icons">whatshot</i></h4>
+    </div>
+        <div id="collapseZero" class="collapse show"data-parent="#accordionExample">
+        <div class="card-body">
+        <div class="input-group-prepend">
+            <div class="currentscore col input-group-text">You have $ {{request.session.total}}</div>
+    </div>
+
+<!-- reset -->
+        <form action="reset" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-block">RESET</button>
+        </form>
+        </div>
+    </div>
+</div>   
+<!-- /score -->
+<!-- FARM -->
+    <div class="card">
+        <div class="card-header" data-toggle="collapse" data-target="#collapseOne" id="headingOne">
+                <h4><img src="https://cdn2.iconfinder.com/data/icons/people-18/124/people-person-worker-profession-work-job_37-512.png" alt="ninjaicon" style="max-height:45px;">  
+                Farm</h4>
+        </div>
+        <div id="collapseOne" class="collapse"data-parent="#accordionExample">
+        <div class="card-body">
+            <h6>Farm for 5-10 Gold</h6>
+            <form action="farm" method="POST">
+                {% csrf_token %}
+                <button name="farm" type="submit" class="btn btn-primary btn-block">Get to Work!</button>
+            </form>    
+        </div>
+        </div>
+    </div>
+<!-- CAVE -->
+    <div class="card">
+        <div class="card-header" data-toggle="collapse" data-target="#collapseTwo" id="headingTwo">
+                <h4><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUsEvEuvRibSG3iTnV6VBLgbOk9VVYL36_7r4-fCspGCwzM27l" alt="ninjaicon" style="max-height:45px;">  
+                Cave</h4> 
+        </div>
+        <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
+        <div class="card-body">
+            <h6>Explore a cave for 10-20 Gold</h6>
+            <form action="cave" method="POST">
+                {% csrf_token %}
+                <button name="cave" type="submit" class="btn btn-primary btn-block">Explore!</button>
+            </form>    
+        </div>
+        </div>
+    </div>
+<!-- HOUSE -->
+            <div class="card">
+                <div class="card-header" data-toggle="collapse" data-target="#collapseThree" id="headingThree">
+                        <h4><img src="https://cdn4.iconfinder.com/data/icons/icon-flat-icon-set/50/home-512.png" alt="ninjaicon" style="max-height:45px;">  
+                        House</h4>
+                </div>
+                <div id="collapseThree" class="collapse" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <h6>Clean houses for 2-5 Gold</h6>
+                        <form action="house" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="house" class="btn btn-primary btn-block">Get Sweeping!</button>
+                        </form>    
+                    </div>
+                </div>
+            </div>
+<!--CASINO -->
+            <div class="card">
+                <div class="card-header"  data-toggle="collapse" data-target="#collapseFour" id="headingThree">
+                        <h4><img src="https://cdn3.iconfinder.com/data/icons/casino-and-gambling-icons/489/Dice-2-512.png" alt="ninjaicon" style="max-height:45px;">  
+                            Casino</h4>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <h6>Roulette!</h6>
+                     <p> Payouts: Color: 2x, number: 35x</p>
+                    <form action="casino" method="POST">
+                        {% csrf_token %}
+                        <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                        <input class ="btn-block" type=number min=1 max={{request.session.total}} name="bet" placeholder=" You may bet up to ${{request.session.total}}">
+                        </div>
+                        <input class ="btn-block guess" type=number  min=0 max=36 name="guess" placeholder ="  1-36">
+                        <button type="submit" class="btn btn-danger btn-block">ROLL</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>     
+
+</div>
+<!--/left -->
+<!-- right -->
+<div class = "container rightcont col-sm-12 col-md-8">
+
+<table class="table table-dark">
+<thead><tr><th scope="col">Log</th>
+<th scope="col">Time</th></tr></thead>
+        <tbody>  
+        {% for x in  request.session.log reversed %}
+        <tr>
+            <td> {{x.text}} </td>
+            <td> {{x.now}} </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+<!-- /right -->
+<!-- /main -->
+</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
